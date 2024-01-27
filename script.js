@@ -1,11 +1,25 @@
+const changeMessage = document.getElementById("change-message");
 const stopwatchElement = document.getElementById("timer");
 const resetButton = document.getElementById("reset");
 const userText = document.getElementById("user-text");
-const messageText = document.querySelector("div h3").innerHTML;
+const messageText = document.querySelector("div h3");
 
+const messages = [
+  "Hello, world!",
+  "How are you today?",
+  "JavaScript is fun!",
+  "Random message generator.",
+  "Have a great day!",
+];
 let startTime;
 let isRunning = false;
 let interval;
+
+function getRandomMessage() {
+  const randomIndex = Math.floor(Math.random() * messages.length);
+  const message = messages[randomIndex];
+  messageText.innerHTML = message;
+}
 
 function updateStopwatch() {
   let currentTime = Date.now();
@@ -49,8 +63,8 @@ function startOnText() {
 
 function spellCheck() {
   let textEntered = userText.value;
-  let messageTextMatch = messageText.substring(0, textEntered.length);
-  if (textEntered == messageText) {
+  let messageTextMatch = messageText.innerHTML.substring(0, textEntered.length);
+  if (textEntered == messageText.innerHTML) {
     userText.style.borderColor = "green";
     stopStopwatch();
   } else {
@@ -72,4 +86,5 @@ function reset() {
 
 userText.addEventListener("keypress", startOnText);
 userText.addEventListener("keyup", spellCheck);
+changeMessage.addEventListener("click", getRandomMessage);
 resetButton.addEventListener("click", reset);
